@@ -1,0 +1,38 @@
+{
+	"apiVersion": 3,
+	"name": "nur/test",
+	"title": "NUR Test",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Widget percobaan NUR Builder.",
+
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "NUR Test Block"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#172D4B"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#F5F9FF"
+		},
+		"fontSize": {
+			"type": "number",
+			"default": 18
+		},
+		"padding": {
+			"type": "number",
+			"default": 30
+		},
+		"alignment": {
+			"type": "string",
+			"default": "center"
+		}
+	},
+
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css"
+}
