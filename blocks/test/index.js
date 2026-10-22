@@ -13,6 +13,9 @@
         TextControl
     } = components;
 
+    const defaultBackgroundUrl =
+        'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80';
+
     const awardFields = [
         ['awardOneTitle', 'awardOneText'],
         ['awardTwoTitle', 'awardTwoText'],
@@ -20,14 +23,14 @@
     ];
 
     function getBackgroundStyle(imageUrl) {
-        return imageUrl
-            ? {
-                backgroundImage:
-                    'linear-gradient(90deg, rgba(17, 24, 39, 0.72), rgba(17, 24, 39, 0.24)), url(' +
-                    JSON.stringify(imageUrl) +
-                    ')'
-            }
-            : {};
+        const backgroundUrl = imageUrl || defaultBackgroundUrl;
+
+        return {
+            backgroundImage:
+                'linear-gradient(90deg, rgba(17, 24, 39, 0.72), rgba(17, 24, 39, 0.24)), url(' +
+                JSON.stringify(backgroundUrl) +
+                ')'
+        };
     }
 
     function renderAwards(attributes, setAttributes) {
@@ -138,12 +141,12 @@
                                     onClick: function () {
                                         setAttributes({
                                             imageId: 0,
-                                            imageUrl: ''
+                                            imageUrl: defaultBackgroundUrl
                                         });
                                     },
                                     variant: 'tertiary'
                                 },
-                                'Hapus gambar'
+                                'Gunakan gambar bawaan'
                             )
                             : null,
                         el(TextControl, {
