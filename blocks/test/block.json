@@ -1,38 +1,52 @@
 {
-	"apiVersion": 3,
-	"name": "nur/test",
-	"title": "NUR Test",
-	"category": "widgets",
-	"icon": "smiley",
-	"description": "Widget percobaan NUR Builder.",
-
-	"attributes": {
-		"text": {
-			"type": "string",
-			"default": "NUR Test Block"
-		},
-		"textColor": {
-			"type": "string",
-			"default": "#172D4B"
-		},
-		"backgroundColor": {
-			"type": "string",
-			"default": "#F5F9FF"
-		},
-		"fontSize": {
-			"type": "number",
-			"default": 18
-		},
-		"padding": {
-			"type": "number",
-			"default": 30
-		},
-		"alignment": {
-			"type": "string",
-			"default": "center"
-		}
-	},
-
-	"editorScript": "file:./index.js",
-	"style": "file:./style.css"
+  "apiVersion": 3,
+  "name": "nur/test",
+  "title": "NUR Hero",
+  "category": "widgets",
+  "icon": "cover-image",
+  "description": "Hero section pesantren dengan gaya seperti mockup landing page.",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Pondok Pesantren\nAn-Nur II Al-Murtadlo"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "Merupakan pesantren salaf modern bervanisa dengan visi tercetaknya putra-putri kader ulama' intelektual & berhaluan Ahlussunnah Wal Jama'ah."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Daftar Sekarang Disini!"
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80"
+    },
+    "awardOneTitle": {
+      "type": "string",
+      "default": "MURI"
+    },
+    "awardOneText": {
+      "type": "string",
+      "default": "Rekor Muri 2020"
+    },
+    "awardTwoTitle": {
+      "type": "string",
+      "default": "2019"
+    },
+    "awardTwoText": {
+      "type": "string",
+      "default": "Penghargaan Pesantren\nModern Inspiratif"
+    },
+    "awardThreeTitle": {
+      "type": "string",
+      "default": "2024"
+    },
+    "awardThreeText": {
+      "type": "string",
+      "default": "Penghargaan One\nPesantren One Product"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css"
 }
