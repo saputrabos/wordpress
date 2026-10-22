@@ -1,302 +1,208 @@
 (function (blocks, element, blockEditor, components) {
-
     const el = element.createElement;
-
+    const Fragment = element.Fragment;
     const {
         InspectorControls,
         RichText
     } = blockEditor;
-
     const {
         PanelBody,
         TextControl,
-        RangeControl,
-        SelectControl,
-        ColorPalette
+        TextareaControl
     } = components;
 
-
-    blocks.registerBlockType('nur/test', {
-
-        edit: function (props) {
-
-            const {
-                attributes,
-                setAttributes
-            } = props;
-
-            const {
-                text,
-                textColor,
-                backgroundColor,
-                fontSize,
-                padding,
-                alignment
-            } = attributes;
-
-
-            const blockStyle = {
-                color: textColor,
-                backgroundColor: backgroundColor,
-                fontSize: fontSize + 'px',
-                padding: padding + 'px',
-                textAlign: alignment
-            };
-
-
-            return el(
-                element.Fragment,
-                {},
-
-                /*
-                 * SIDEBAR
-                 */
-                el(
-                    InspectorControls,
-                    {},
-
-                    el(
-                        PanelBody,
-                        {
-                            title: 'NUR Test',
-                            initialOpen: true
-                        },
-
-                        /*
-                         * TEXT
-                         */
-                        el(
-                            TextControl,
-                            {
-                                label: 'Text',
-                                value: text,
-                                onChange: function (value) {
-                                    setAttributes({
-                                        text: value
-                                    });
-                                }
-                            }
-                        ),
-
-                        /*
-                         * TEXT COLOR
-                         */
-                        el(
-                            'div',
-                            {
-                                className: 'nur-control-group'
-                            },
-
-                            el(
-                                'p',
-                                {
-                                    className: 'nur-control-label'
-                                },
-                                'Text Color'
-                            ),
-
-                            el(
-                                ColorPalette,
-                                {
-                                    value: textColor,
-                                    onChange: function (value) {
-
-                                        setAttributes({
-                                            textColor: value || '#172D4B'
-                                        });
-
-                                    }
-                                }
-                            )
-                        ),
-
-                        /*
-                         * BACKGROUND
-                         */
-                        el(
-                            'div',
-                            {
-                                className: 'nur-control-group'
-                            },
-
-                            el(
-                                'p',
-                                {
-                                    className: 'nur-control-label'
-                                },
-                                'Background'
-                            ),
-
-                            el(
-                                ColorPalette,
-                                {
-                                    value: backgroundColor,
-                                    onChange: function (value) {
-
-                                        setAttributes({
-                                            backgroundColor: value || '#F5F9FF'
-                                        });
-
-                                    }
-                                }
-                            )
-                        ),
-
-                        /*
-                         * FONT SIZE
-                         */
-                        el(
-                            RangeControl,
-                            {
-                                label: 'Font Size',
-                                value: fontSize,
-                                min: 10,
-                                max: 80,
-                                onChange: function (value) {
-
-                                    setAttributes({
-                                        fontSize: value || 18
-                                    });
-
-                                }
-                            }
-                        ),
-
-                        /*
-                         * PADDING
-                         */
-                        el(
-                            RangeControl,
-                            {
-                                label: 'Padding',
-                                value: padding,
-                                min: 0,
-                                max: 100,
-                                onChange: function (value) {
-
-                                    setAttributes({
-                                        padding: value || 0
-                                    });
-
-                                }
-                            }
-                        ),
-
-                        /*
-                         * ALIGNMENT
-                         */
-                        el(
-                            SelectControl,
-                            {
-                                label: 'Alignment',
-                                value: alignment,
-                                options: [
-                                    {
-                                        label: 'Left',
-                                        value: 'left'
-                                    },
-                                    {
-                                        label: 'Center',
-                                        value: 'center'
-                                    },
-                                    {
-                                        label: 'Right',
-                                        value: 'right'
-                                    }
-                                ],
-                                onChange: function (value) {
-
-                                    setAttributes({
-                                        alignment: value
-                                    });
-
-                                }
-                            }
-                        )
-
-                    )
-                ),
-
-                /*
-                 * BLOCK DI CANVAS
-                 */
-                el(
-                    'div',
-                    {
-                        className: 'nur-test-block',
-                        style: blockStyle
-                    },
-
-                    el(
-                        RichText,
-                        {
-                            tagName: 'div',
-                            value: text,
-                            onChange: function (value) {
-
-                                setAttributes({
-                                    text: value
-                                });
-
-                            },
-                            placeholder: 'Tulis sesuatu...',
-                            allowedFormats: []
-                        }
-                    )
-
-                )
-
-            );
-
-        },
-
-
-        save: function (props) {
-
-            const {
-                attributes
-            } = props;
-
-            const {
-                text,
-                textColor,
-                backgroundColor,
-                fontSize,
-                padding,
-                alignment
-            } = attributes;
-
-
-            const blockStyle = {
-                color: textColor,
-                backgroundColor: backgroundColor,
-                fontSize: fontSize + 'px',
-                padding: padding + 'px',
-                textAlign: alignment
-            };
-
-
+    function renderAwards(attributes) {
+        return [
+            {
+                title: attributes.awardOneTitle,
+                text: attributes.awardOneText
+            },
+            {
+                title: attributes.awardTwoTitle,
+                text: attributes.awardTwoText
+            },
+            {
+                title: attributes.awardThreeTitle,
+                text: attributes.awardThreeText
+            }
+        ].map(function (award, index) {
             return el(
                 'div',
                 {
-                    className: 'nur-test-block',
-                    style: blockStyle
+                    className: 'nur-hero__award',
+                    key: index
                 },
-
-                el(
-                    RichText.Content,
-                    {
-                        tagName: 'div',
-                        value: text
-                    }
-                )
-
+                el('strong', { className: 'nur-hero__award-title' }, award.title),
+                el('p', { className: 'nur-hero__award-text' }, award.text)
             );
+        });
+    }
 
+    blocks.registerBlockType('nur/test', {
+        edit: function (props) {
+            const { attributes, setAttributes } = props;
+
+            return el(
+                Fragment,
+                {},
+                el(
+                    InspectorControls,
+                    {},
+                    el(
+                        PanelBody,
+                        {
+                            title: 'Konten NUR Hero',
+                            initialOpen: true
+                        },
+                        el(TextControl, {
+                            label: 'URL gambar',
+                            value: attributes.imageUrl,
+                            onChange: function (value) {
+                                setAttributes({ imageUrl: value });
+                            }
+                        }),
+                        el(TextControl, {
+                            label: 'Teks tombol',
+                            value: attributes.buttonText,
+                            onChange: function (value) {
+                                setAttributes({ buttonText: value });
+                            }
+                        }),
+                        el(TextControl, {
+                            label: 'Judul penghargaan 1',
+                            value: attributes.awardOneTitle,
+                            onChange: function (value) {
+                                setAttributes({ awardOneTitle: value });
+                            }
+                        }),
+                        el(TextareaControl, {
+                            label: 'Keterangan penghargaan 1',
+                            value: attributes.awardOneText,
+                            onChange: function (value) {
+                                setAttributes({ awardOneText: value });
+                            }
+                        }),
+                        el(TextControl, {
+                            label: 'Judul penghargaan 2',
+                            value: attributes.awardTwoTitle,
+                            onChange: function (value) {
+                                setAttributes({ awardTwoTitle: value });
+                            }
+                        }),
+                        el(TextareaControl, {
+                            label: 'Keterangan penghargaan 2',
+                            value: attributes.awardTwoText,
+                            onChange: function (value) {
+                                setAttributes({ awardTwoText: value });
+                            }
+                        }),
+                        el(TextControl, {
+                            label: 'Judul penghargaan 3',
+                            value: attributes.awardThreeTitle,
+                            onChange: function (value) {
+                                setAttributes({ awardThreeTitle: value });
+                            }
+                        }),
+                        el(TextareaControl, {
+                            label: 'Keterangan penghargaan 3',
+                            value: attributes.awardThreeText,
+                            onChange: function (value) {
+                                setAttributes({ awardThreeText: value });
+                            }
+                        })
+                    )
+                ),
+                el(
+                    'section',
+                    { className: 'nur-hero' },
+                    el(
+                        'div',
+                        { className: 'nur-hero__content' },
+                        el(RichText, {
+                            tagName: 'h1',
+                            className: 'nur-hero__heading',
+                            value: attributes.heading,
+                            onChange: function (value) {
+                                setAttributes({ heading: value });
+                            },
+                            placeholder: 'Tulis judul utama...',
+                            allowedFormats: []
+                        }),
+                        el(RichText, {
+                            tagName: 'p',
+                            className: 'nur-hero__subheading',
+                            value: attributes.subheading,
+                            onChange: function (value) {
+                                setAttributes({ subheading: value });
+                            },
+                            placeholder: 'Tulis deskripsi pesantren...',
+                            allowedFormats: []
+                        }),
+                        el(
+                            'span',
+                            { className: 'nur-hero__button' },
+                            attributes.buttonText
+                        )
+                    ),
+                    el(
+                        'div',
+                        { className: 'nur-hero__visual' },
+                        el('img', {
+                            className: 'nur-hero__image',
+                            src: attributes.imageUrl,
+                            alt: ''
+                        }),
+                        el(
+                            'div',
+                            { className: 'nur-hero__awards' },
+                            renderAwards(attributes)
+                        )
+                    )
+                )
+            );
+        },
+        save: function (props) {
+            const { attributes } = props;
+
+            return el(
+                'section',
+                { className: 'nur-hero' },
+                el(
+                    'div',
+                    { className: 'nur-hero__content' },
+                    el(RichText.Content, {
+                        tagName: 'h1',
+                        className: 'nur-hero__heading',
+                        value: attributes.heading
+                    }),
+                    el(RichText.Content, {
+                        tagName: 'p',
+                        className: 'nur-hero__subheading',
+                        value: attributes.subheading
+                    }),
+                    el(
+                        'span',
+                        { className: 'nur-hero__button' },
+                        attributes.buttonText
+                    )
+                ),
+                el(
+                    'div',
+                    { className: 'nur-hero__visual' },
+                    el('img', {
+                        className: 'nur-hero__image',
+                        src: attributes.imageUrl,
+                        alt: ''
+                    }),
+                    el(
+                        'div',
+                        { className: 'nur-hero__awards' },
+                        renderAwards(attributes)
+                    )
+                )
+            );
         }
-
     });
-
 })(
     window.wp.blocks,
     window.wp.element,

@@ -1,25 +1,139 @@
-.nur-test-block {
+.nur-hero {
 	box-sizing: border-box;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	align-items: center;
+	gap: clamp(28px, 5vw, 72px);
 	width: 100%;
-
-	border: 2px dashed #2271b1;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: clamp(32px, 6vw, 80px);
+	border-radius: 24px;
 	background: #f5f9ff;
+	color: #172d4b;
+	font-family: inherit;
+}
 
+.nur-hero *,
+.nur-hero *::before,
+.nur-hero *::after {
+	box-sizing: border-box;
+}
+
+.nur-hero__content {
+	min-width: 0;
+}
+
+.nur-hero__heading {
+	margin: 0 0 20px;
+	color: #172d4b;
+	font-size: clamp(32px, 5vw, 58px);
+	font-weight: 700;
+	line-height: 1.12;
+	white-space: pre-line;
+}
+
+.nur-hero__subheading {
+	margin: 0 0 28px;
+	color: #52647a;
+	font-size: 17px;
+	line-height: 1.75;
+	white-space: pre-line;
+}
+
+.nur-hero__button {
+	display: inline-block;
+	padding: 14px 24px;
+	border-radius: 8px;
+	background: #2271b1;
+	color: #fff;
+	font-size: 15px;
 	font-weight: 600;
+	line-height: 1.4;
+}
+
+.nur-hero__visual {
+	position: relative;
+	min-width: 0;
+	padding-bottom: 44px;
+}
+
+.nur-hero__image {
+	display: block;
+	width: 100%;
+	height: clamp(280px, 38vw, 460px);
+	border-radius: 18px;
+	object-fit: cover;
+}
+
+.nur-hero__awards {
+	position: absolute;
+	right: -20px;
+	bottom: 0;
+	left: -20px;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.nur-hero__award {
+	min-width: 0;
+	padding: 16px 12px;
+	border: 1px solid #e4ebf4;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 8px 24px rgb(23 45 75 / 10%);
+}
+
+.nur-hero__award-title {
+	display: block;
+	margin-bottom: 6px;
+	color: #2271b1;
+	font-size: 18px;
+	line-height: 1.2;
+}
+
+.nur-hero__award-text {
+	margin: 0;
+	color: #52647a;
+	font-size: 12px;
 	line-height: 1.5;
-
-	min-height: 60px;
+	white-space: pre-line;
 }
 
-.nur-test-block [contenteditable="true"] {
-	outline: none;
+@media (max-width: 782px) {
+	.nur-hero {
+		grid-template-columns: 1fr;
+		gap: 32px;
+		padding: 32px 24px;
+	}
+
+	.nur-hero__visual {
+		margin: 0 12px;
+	}
+
+	.nur-hero__awards {
+		right: -12px;
+		left: -12px;
+	}
 }
 
-.nur-control-group {
-	margin-bottom: 18px;
-}
+@media (max-width: 480px) {
+	.nur-hero {
+		padding: 28px 18px;
+	}
 
-.nur-control-label {
-	margin: 0 0 8px;
-	font-weight: 600;
+	.nur-hero__awards {
+		position: static;
+		grid-template-columns: 1fr;
+		margin-top: 12px;
+	}
+
+	.nur-hero__visual {
+		padding-bottom: 0;
+	}
+
+	.nur-hero__image {
+		height: 260px;
+	}
 }
