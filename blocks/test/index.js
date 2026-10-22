@@ -3,37 +3,88 @@
     const Fragment = element.Fragment;
     const {
         InspectorControls,
+        MediaUpload,
+        MediaUploadCheck,
         RichText
     } = blockEditor;
     const {
+        Button,
         PanelBody,
-        TextControl,
-        TextareaControl
+        TextControl
     } = components;
 
-    function renderAwards(attributes) {
-        return [
-            {
-                title: attributes.awardOneTitle,
-                text: attributes.awardOneText
-            },
-            {
-                title: attributes.awardTwoTitle,
-                text: attributes.awardTwoText
-            },
-            {
-                title: attributes.awardThreeTitle,
-                text: attributes.awardThreeText
+    const awardFields = [
+        ['awardOneTitle', 'awardOneText'],
+        ['awardTwoTitle', 'awardTwoText'],
+        ['awardThreeTitle', 'awardThreeText']
+    ];
+
+    function getBackgroundStyle(imageUrl) {
+        return imageUrl
+            ? {
+                backgroundImage:
+                    'linear-gradient(90deg, rgba(17, 24, 39, 0.72), rgba(17, 24, 39, 0.24)), url(' +
+                    JSON.stringify(imageUrl) +
+                    ')'
             }
-        ].map(function (award, index) {
+            : {};
+    }
+
+    function renderAwards(attributes, setAttributes) {
+        return awardFields.map(function (fields, index) {
+            const titleField = fields[0];
+            const textField = fields[1];
+            const Title = setAttributes ? RichText : RichText.Content;
+            const Text = setAttributes ? RichText : RichText.Content;
+
             return el(
                 'div',
                 {
                     className: 'nur-hero__award',
                     key: index
                 },
-                el('strong', { className: 'nur-hero__award-title' }, award.title),
-                el('p', { className: 'nur-hero__award-text' }, award.text)
+                el(Title, {
+                    tagName: 'strong',
+                    className: 'nur-hero__award-title',
+                    value: attributes[titleField],
+                    onChange: setAttributes
+                        ? function (value) {
+                            const update = {};
+                            update[titleField] = value;
+                            setAttributes(update);
+                        }
+                        : undefined,
+                    placeholder: 'Judul penghargaan...',
+                    allowedFormats: []
+                }),
+                el(Text, {
+                    tagName: 'p',
+                    className: 'nur-hero__award-text',
+                    value: attributes[textField],
+                    onChange: setAttributes
+                        ? function (value) {
+                            const update = {};
+                            update[textField] = value;
+                            setAttributes(update);
+                        }
+                        : undefined,
+                    placeholder: 'Keterangan penghargaan...',
+                    allowedFormats: []
+                })
+            );
+        });
+    }
+
+    function renderLegacyAwards(attributes) {
+        return awardFields.map(function (fields, index) {
+            return el(
+                'div',
+                {
+                    className: 'nur-hero__award',
+                    key: index
+                },
+                el('strong', { className: 'nur-hero__award-title' }, attributes[fields[0]]),
+                el('p', { className: 'nur-hero__award-text' }, attributes[fields[1]])
             );
         });
     }
@@ -51,14 +102,58 @@
                     el(
                         PanelBody,
                         {
-                            title: 'Konten NUR Hero',
+                            title: 'Pengaturan NUR Hero',
                             initialOpen: true
                         },
+                        el(
+                            MediaUploadCheck,
+                            {},
+                            el(MediaUpload, {
+                                onSelect: function (media) {
+                                    setAttributes({
+                                        imageId: media.id,
+                                        imageUrl: media.url
+                                    });
+                                },
+                                allowedTypes: ['image'],
+                                value: attributes.imageId,
+                                render: function (media) {
+                                    return el(
+                                        Button,
+                                        {
+                                            onClick: media.open,
+                                            variant: 'secondary'
+                                        },
+                                        attributes.imageId
+                                            ? 'Ganti gambar latar'
+                                            : 'Pilih gambar latar'
+                                    );
+                                }
+                            })
+                        ),
+                        attributes.imageId
+                            ? el(
+                                Button,
+                                {
+                                    onClick: function () {
+                                        setAttributes({
+                                            imageId: 0,
+                                            imageUrl: ''
+                                        });
+                                    },
+                                    variant: 'tertiary'
+                                },
+                                'Hapus gambar'
+                            )
+                            : null,
                         el(TextControl, {
-                            label: 'URL gambar',
+                            label: 'URL gambar latar',
                             value: attributes.imageUrl,
                             onChange: function (value) {
-                                setAttributes({ imageUrl: value });
+                                setAttributes({
+                                    imageId: 0,
+                                    imageUrl: value
+                                });
                             }
                         }),
                         el(TextControl, {
@@ -69,52 +164,20 @@
                             }
                         }),
                         el(TextControl, {
-                            label: 'Judul penghargaan 1',
-                            value: attributes.awardOneTitle,
+                            label: 'Tautan tombol',
+                            value: attributes.buttonUrl,
                             onChange: function (value) {
-                                setAttributes({ awardOneTitle: value });
-                            }
-                        }),
-                        el(TextareaControl, {
-                            label: 'Keterangan penghargaan 1',
-                            value: attributes.awardOneText,
-                            onChange: function (value) {
-                                setAttributes({ awardOneText: value });
-                            }
-                        }),
-                        el(TextControl, {
-                            label: 'Judul penghargaan 2',
-                            value: attributes.awardTwoTitle,
-                            onChange: function (value) {
-                                setAttributes({ awardTwoTitle: value });
-                            }
-                        }),
-                        el(TextareaControl, {
-                            label: 'Keterangan penghargaan 2',
-                            value: attributes.awardTwoText,
-                            onChange: function (value) {
-                                setAttributes({ awardTwoText: value });
-                            }
-                        }),
-                        el(TextControl, {
-                            label: 'Judul penghargaan 3',
-                            value: attributes.awardThreeTitle,
-                            onChange: function (value) {
-                                setAttributes({ awardThreeTitle: value });
-                            }
-                        }),
-                        el(TextareaControl, {
-                            label: 'Keterangan penghargaan 3',
-                            value: attributes.awardThreeText,
-                            onChange: function (value) {
-                                setAttributes({ awardThreeText: value });
+                                setAttributes({ buttonUrl: value });
                             }
                         })
                     )
                 ),
                 el(
                     'section',
-                    { className: 'nur-hero' },
+                    {
+                        className: 'nur-hero',
+                        style: getBackgroundStyle(attributes.imageUrl)
+                    },
                     el(
                         'div',
                         { className: 'nur-hero__content' },
@@ -138,35 +201,79 @@
                             placeholder: 'Tulis deskripsi pesantren...',
                             allowedFormats: []
                         }),
-                        el(
-                            'span',
-                            { className: 'nur-hero__button' },
-                            attributes.buttonText
-                        )
+                        el(RichText, {
+                            tagName: 'span',
+                            className: 'nur-hero__button',
+                            value: attributes.buttonText,
+                            onChange: function (value) {
+                                setAttributes({ buttonText: value });
+                            },
+                            placeholder: 'Teks tombol...',
+                            allowedFormats: []
+                        })
                     ),
                     el(
                         'div',
-                        { className: 'nur-hero__visual' },
-                        el('img', {
-                            className: 'nur-hero__image',
-                            src: attributes.imageUrl,
-                            alt: ''
-                        }),
-                        el(
-                            'div',
-                            { className: 'nur-hero__awards' },
-                            renderAwards(attributes)
-                        )
+                        { className: 'nur-hero__awards' },
+                        renderAwards(attributes, setAttributes)
                     )
                 )
             );
         },
+        deprecated: [
+            {
+                save: function (props) {
+                    const { attributes } = props;
+
+                    return el(
+                        'section',
+                        { className: 'nur-hero' },
+                        el(
+                            'div',
+                            { className: 'nur-hero__content' },
+                            el(RichText.Content, {
+                                tagName: 'h1',
+                                className: 'nur-hero__heading',
+                                value: attributes.heading
+                            }),
+                            el(RichText.Content, {
+                                tagName: 'p',
+                                className: 'nur-hero__subheading',
+                                value: attributes.subheading
+                            }),
+                            el(
+                                'span',
+                                { className: 'nur-hero__button' },
+                                attributes.buttonText
+                            )
+                        ),
+                        el(
+                            'div',
+                            { className: 'nur-hero__visual' },
+                            el('img', {
+                                className: 'nur-hero__image',
+                                src: attributes.imageUrl,
+                                alt: ''
+                            }),
+                            el(
+                                'div',
+                                { className: 'nur-hero__awards' },
+                                renderLegacyAwards(attributes)
+                            )
+                        )
+                    );
+                }
+            }
+        ],
         save: function (props) {
             const { attributes } = props;
 
             return el(
                 'section',
-                { className: 'nur-hero' },
+                {
+                    className: 'nur-hero',
+                    style: getBackgroundStyle(attributes.imageUrl)
+                },
                 el(
                     'div',
                     { className: 'nur-hero__content' },
@@ -180,25 +287,17 @@
                         className: 'nur-hero__subheading',
                         value: attributes.subheading
                     }),
-                    el(
-                        'span',
-                        { className: 'nur-hero__button' },
-                        attributes.buttonText
-                    )
+                    el(RichText.Content, {
+                        tagName: 'a',
+                        className: 'nur-hero__button',
+                        href: attributes.buttonUrl,
+                        value: attributes.buttonText
+                    })
                 ),
                 el(
                     'div',
-                    { className: 'nur-hero__visual' },
-                    el('img', {
-                        className: 'nur-hero__image',
-                        src: attributes.imageUrl,
-                        alt: ''
-                    }),
-                    el(
-                        'div',
-                        { className: 'nur-hero__awards' },
-                        renderAwards(attributes)
-                    )
+                    { className: 'nur-hero__awards' },
+                    renderAwards(attributes)
                 )
             );
         }

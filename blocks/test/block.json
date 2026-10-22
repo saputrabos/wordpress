@@ -18,9 +18,17 @@
       "type": "string",
       "default": "Daftar Sekarang Disini!"
     },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
     "imageUrl": {
       "type": "string",
       "default": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80"
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
     },
     "awardOneTitle": {
       "type": "string",
