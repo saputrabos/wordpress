@@ -2,49 +2,26 @@
 	box-sizing: border-box;
 	position: relative;
 	display: grid;
-	grid-template-columns: minmax(0, 1.9fr) minmax(240px, 0.58fr);
+	grid-template-columns: minmax(0, 1.9fr) minmax(250px, 0.6fr);
 	align-items: end;
-	gap: 28px;
+	gap: 26px;
 	width: 100%;
 	min-height: 760px;
 	margin: 18px auto 0;
-	padding: 50px 44px 26px 52px;
+	padding: 42px 42px 26px 52px;
 	border-radius: 38px;
 	overflow: hidden;
-	background: linear-gradient(90deg, rgba(17,24,39,0.4), rgba(17,24,39,0.15));
+	background: linear-gradient(90deg, rgba(17,24,39,0.38), rgba(17,24,39,0.13));
 	color: #fff;
 	font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
 	box-shadow: 0 18px 40px rgba(16, 24, 40, 0.14);
 }
 
-.nur-hero::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background-image: var(--nur-hero-bg, url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1800&q=80'));
-	background-size: cover;
-	background-position: center;
-	transform: scale(1.04);
-	z-index: 0;
-}
-
-.nur-hero::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(90deg, rgba(8,18,30,0.7) 0%, rgba(8,18,30,0.44) 34%, rgba(8,18,30,0.18) 100%);
-	z-index: 1;
-}
-
-.nur-hero * {
-	box-sizing: border-box;
+.nur-hero__content {
 	position: relative;
 	z-index: 2;
-}
-
-.nur-hero__content {
-	min-width: 0;
 	padding-bottom: 18px;
+	min-width: 0;
 }
 
 .nur-hero__heading {
@@ -68,49 +45,40 @@
 	text-shadow: 0 3px 16px rgba(0,0,0,0.2);
 }
 
-.nur-hero__actions {
-	display: flex;
-	align-items: center;
-	gap: 18px;
-	margin-top: 10px;
-}
-
 .nur-hero__button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 22px 28px;
+	padding: 22px 30px;
 	border: none;
 	border-radius: 26px;
 	background: linear-gradient(180deg, #0f5cae 0%, #0c468d 100%);
 	color: #fff;
-	font-size: clamp(1.15rem, 1.4vw, 1.8rem);
+	font-size: clamp(1.2rem, 1.4vw, 1.8rem);
 	font-weight: 700;
 	box-shadow: 0 18px 26px rgba(13, 59, 112, 0.28);
 	cursor: pointer;
 }
 
-.nur-hero__play {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 76px;
-	height: 76px;
-	border: 1px solid rgba(255,255,255,0.24);
-	border-radius: 50%;
-	background: rgba(255,255,255,0.12);
-	backdrop-filter: blur(8px);
-	color: #fff;
-	font-size: 2.1rem;
-	line-height: 1;
-	box-shadow: 0 12px 22px rgba(0,0,0,0.16);
-}
-
 .nur-hero__visual {
 	position: relative;
 	min-width: 0;
-	align-self: stretch;
-	padding-top: 10px;
+	width: 100%;
+	height: 100%;
+	min-height: 420px;
+	border-radius: 36px;
+	overflow: hidden;
+	background: #dfeaf2;
+	box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.nur-hero__image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 36px;
+	filter: saturate(1.08) contrast(1.05);
 }
 
 .nur-hero__awards {
@@ -118,10 +86,10 @@
 	flex-direction: column;
 	gap: 18px;
 	position: absolute;
-	right: 0;
-	top: 8px;
-	bottom: 10px;
+	right: 14px;
+	top: 18px;
 	width: 220px;
+	z-index: 3;
 }
 
 .nur-hero__award {
@@ -139,13 +107,6 @@
 	min-height: 164px;
 }
 
-.nur-hero__award-top {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 8px;
-}
-
 .nur-hero__award-title {
 	display: block;
 	color: #fff;
@@ -155,29 +116,10 @@
 	letter-spacing: -0.04em;
 }
 
-.nur-hero__award-arrow {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 26px;
-	height: 26px;
-	border-radius: 50%;
-	background: rgba(255,255,255,0.12);
-	font-size: 1.5rem;
-	line-height: 1;
-}
-
-.nur-hero__award-badge {
-	display: block;
-	margin-bottom: 8px;
-	font-size: 2.2rem;
-	line-height: 1;
-}
-
 .nur-hero__award-text {
-	margin: 0;
+	margin: 8px 0 0;
 	color: rgba(255,255,255,0.88);
-	font-size: clamp(0.9rem, 1vw, 1.1rem);
+	font-size: clamp(0.9rem, 1vw, 1.08rem);
 	line-height: 1.4;
 	white-space: pre-line;
 }
@@ -193,16 +135,11 @@
 		padding-bottom: 0;
 	}
 
-	.nur-hero__actions {
-		flex-wrap: wrap;
-	}
-
 	.nur-hero__button {
 		width: 100%;
 	}
 
 	.nur-hero__visual {
-		padding-top: 0;
 		min-height: 300px;
 	}
 
@@ -210,7 +147,6 @@
 		position: relative;
 		right: auto;
 		top: auto;
-		bottom: auto;
 		width: 100%;
 		margin-top: 14px;
 		flex-direction: row;
@@ -239,11 +175,5 @@
 	.nur-hero__button {
 		font-size: 1rem;
 		padding: 18px 22px;
-	}
-
-	.nur-hero__play {
-		width: 58px;
-		height: 58px;
-		font-size: 1.6rem;
 	}
 }
